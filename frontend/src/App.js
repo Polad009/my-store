@@ -35,29 +35,31 @@ function App() {
 
   const removeFromCart = (id) => {
     setCart(cart.filter(item => item.id !== id));
-  };const handleCheckout = async () => {
-  if (!user) {
-    alert('Please login to place an order!');
-    setShowLogin(true);
-    return;
-  }
-  if (cart.length === 0) {
-    alert('Your cart is empty!');
-    return;
-  }
-  try {
-    await axios.post('http://localhost:5000/api/order', {
-      userEmail: user.email,
-      items: cart,
-      total: totalPrice,
-    });
-    alert('Order placed successfully! 🎉');
-    setCart([]);
-    setShowCart(false);
-  } catch (err) {
-    alert('Something went wrong!');
-  }
-};
+  };
+
+  const handleCheckout = async () => {
+    if (!user) {
+      alert('Please login to place an order!');
+      setShowLogin(true);
+      return;
+    }
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    try {
+      await axios.post('http://localhost:5000/api/order', {
+        userEmail: user.email,
+        items: cart,
+        total: totalPrice,
+      });
+      alert('Order placed successfully! 🎉');
+      setCart([]);
+      setShowCart(false);
+    } catch (err) {
+      alert('Something went wrong!');
+    }
+  };
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -67,8 +69,8 @@ function App() {
       <header className="header">
         <h1>🛍️ My Store</h1>
         <nav>
-          <a href="#">Home</a>
-          <a href="#">Products</a>
+          <button className="nav-link-btn">Home</button>
+          <button className="nav-link-btn">Products</button>
           <button className="contact-nav-btn" onClick={() => setShowContact(true)}>Contact</button>
           {user ? (
             <>
