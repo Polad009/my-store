@@ -17,7 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
-mongoose.connect('mongodb://localhost:27017/mystore')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mystore')
   .then(() => console.log('MongoDB connected!'))
   .catch(err => console.log(err));
 
@@ -82,5 +82,5 @@ app.get('/api/orders/:email', async (req, res) => {
   }
 });
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
