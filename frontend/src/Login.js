@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './Login.css';
 
-function Login({ onClose, onLoginSuccess }) {
+function Login({ onClose, onLoginSuccess, api }) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ function Login({ onClose, onLoginSuccess }) {
 
     try {
       if (isLogin) {
-        const res = await axios.post('http://localhost:5000/api/login', { email, password });
+        const res = await axios.post(`${api}/api/login`, { email, password });
         alert(`Welcome back, ${res.data.user.name}!`);
         onLoginSuccess(res.data.user);
       } else {
@@ -25,7 +25,7 @@ function Login({ onClose, onLoginSuccess }) {
           setError('Please enter your name!');
           return;
         }
-        await axios.post('http://localhost:5000/api/register', { name, email, password });
+        await axios.post(`${api}/api/register`, { name, email, password });
         alert(`Account created successfully! Please login.`);
         setIsLogin(true);
         return;

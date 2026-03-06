@@ -4,6 +4,8 @@ import axios from 'axios';
 import Login from './Login';
 import Contact from './Contact';
 
+const API = 'https://my-store-production-5cc7.up.railway.app';
+
 const products = [
   { id: 1, name: "Wireless Headphones", price: 99.99, emoji: "🎧" },
   { id: 2, name: "Smart Watch", price: 199.99, emoji: "⌚" },
@@ -48,7 +50,7 @@ function App() {
       return;
     }
     try {
-      await axios.post('http://localhost:5000/api/order', {
+      await axios.post(`${API}/api/order`, {
         userEmail: user.email,
         items: cart,
         total: totalPrice,
@@ -93,6 +95,7 @@ function App() {
             setUser(userData);
             setShowLogin(false);
           }}
+          api={API}
         />
       )}
       {showContact && <Contact onClose={() => setShowContact(false)} />}
